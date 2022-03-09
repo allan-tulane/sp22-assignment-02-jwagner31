@@ -45,11 +45,35 @@ def pad(x,y):
 
 
 
-def subquadratic_multiply(x, y):
-    ### TODO
-    pass
-    ###
+def _subquadratic_multiply(x, y):
+  xvec, yvec = pad(x.binary_vec, y.binary_vec)
+  #if(len(xvec) <= 1 and len(yvec) <= 1):
+  if(x.decimal_val <= 1 and y.decimal_val <= 1):
+    return BinaryNumber(x.decimal_val*y.decimal_val)
+  else:
+    x_left, x_right = split_number(xvec)
+    y_left, y_right = split_number(yvec)
 
+    n = len(xvec)
+    #left part
+    LP = _subquadratic_multiply(x_left, y_left)
+    sumLeft = bit_shift(LP, n)
+
+    #right sum
+    sumRight = _subquadratic_multiply(x_right, y_right)
+
+    #middle sum
+    MsumL = _subquadratic_multiply(x, y)
+    inside = MsumL.decimal_val - LP.decimal_val - sumRight.decimal_val
+    sumMid = bit_shift(BinaryNumber(inside), n//2)
+
+    total = sumLeft.decimal_val + sumMid.decimal_val + sumRight.decimal_val
+    return BinaryNumber(total)
+
+def subquadratic_multiply(x, y):
+  #converts the result from a binary number to a regular int
+  return _subquadratic_multiply(x, y).decimal_val
+  
 ## Feel free to add your own tests here.
 def test_multiply():
     assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
