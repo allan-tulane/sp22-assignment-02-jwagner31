@@ -48,7 +48,7 @@ def pad(x,y):
 def _subquadratic_multiply(x, y):
   xvec, yvec = pad(x.binary_vec, y.binary_vec)
   #if(len(xvec) <= 1 and len(yvec) <= 1):
-  if(x.decimal_val <= 10 and y.decimal_val <= 10):
+  if(x.decimal_val <= 1 and y.decimal_val <= 1):
     return BinaryNumber(x.decimal_val*y.decimal_val)
   else:
     x_left, x_right = split_number(xvec)
@@ -63,7 +63,7 @@ def _subquadratic_multiply(x, y):
     sumRight = _subquadratic_multiply(x_right, y_right)
 
     #middle sum
-    MsumL = _subquadratic_multiply(x, y)
+    MsumL = _subquadratic_multiply(BinaryNumber(x_left.decimal_val+x_right.decimal_val), BinaryNumber(y_left.decimal_val+y_right.decimal_val))
     inside = MsumL.decimal_val - LP.decimal_val - sumRight.decimal_val
     sumMid = bit_shift(BinaryNumber(inside), n//2)
 
@@ -78,8 +78,9 @@ def subquadratic_multiply(x, y):
 def test_multiply():
     assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
     assert subquadratic_multiply(BinaryNumber(8), BinaryNumber(5)) == 8*5
-    assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
-    assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
+    assert subquadratic_multiply(BinaryNumber(20), BinaryNumber(15)) == 20*15
+    assert subquadratic_multiply(BinaryNumber(42), BinaryNumber(31)) == 42*31
+
 
 
 def time_multiply(x, y, f):
