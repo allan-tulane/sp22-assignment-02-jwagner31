@@ -48,7 +48,7 @@ def pad(x,y):
 def _subquadratic_multiply(x, y):
   xvec, yvec = pad(x.binary_vec, y.binary_vec)
   #if(len(xvec) <= 1 and len(yvec) <= 1):
-  if(x.decimal_val <= 1 and y.decimal_val <= 1):
+  if(x.decimal_val <= 10 and y.decimal_val <= 10):
     return BinaryNumber(x.decimal_val*y.decimal_val)
   else:
     x_left, x_right = split_number(xvec)
@@ -77,6 +77,10 @@ def subquadratic_multiply(x, y):
 ## Feel free to add your own tests here.
 def test_multiply():
     assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
+    assert subquadratic_multiply(BinaryNumber(8), BinaryNumber(5)) == 8*5
+    assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
+    assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
+
 
 def time_multiply(x, y, f):
     start = time.time()
