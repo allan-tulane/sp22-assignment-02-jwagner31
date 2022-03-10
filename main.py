@@ -73,21 +73,29 @@ def _subquadratic_multiply(x, y):
 def subquadratic_multiply(x, y):
   #converts the result from a binary number to a regular int
   return _subquadratic_multiply(x, y).decimal_val
-  
-## Feel free to add your own tests here.
-def test_multiply():
-    assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
-    assert subquadratic_multiply(BinaryNumber(8), BinaryNumber(5)) == 8*5
-    assert subquadratic_multiply(BinaryNumber(20), BinaryNumber(15)) == 20*15
-    assert subquadratic_multiply(BinaryNumber(42), BinaryNumber(31)) == 42*31
-
 
 
 def time_multiply(x, y, f):
-    start = time.time()
-    # multiply two numbers x, y using function f
-    return (time.time() - start)*1000
+  start = time.time()
+  # multiply two numbers x, y using function f
+  subquadratic_multiply(x, y)
+  return (time.time() - start)*1000
 
-    
+## Feel free to add your own tests here.
+def test_multiply():
+  assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
+  assert subquadratic_multiply(BinaryNumber(8), BinaryNumber(5)) == 8*5
+  assert subquadratic_multiply(BinaryNumber(20), BinaryNumber(15)) == 20*15
+  assert subquadratic_multiply(BinaryNumber(42), BinaryNumber(31)) == 42*31
+  
+print(time_multiply(BinaryNumber(2), BinaryNumber(2), subquadratic_multiply))
+print(time_multiply(BinaryNumber(20), BinaryNumber(20), subquadratic_multiply))
+print(time_multiply(BinaryNumber(200), BinaryNumber(200), subquadratic_multiply))
+print(time_multiply(BinaryNumber(2000), BinaryNumber(2000), subquadratic_multiply))
+print(time_multiply(BinaryNumber(20000), BinaryNumber(20000), subquadratic_multiply))
+print(time_multiply(BinaryNumber(200000), BinaryNumber(200000), subquadratic_multiply))
+print(time_multiply(BinaryNumber(2000000), BinaryNumber(2000000), subquadratic_multiply))
+
+
     
 
